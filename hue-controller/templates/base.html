@@ -1,0 +1,16 @@
+<!doctype html>
+<!-- if multiple pages exist, the following title should be updated -->
+<title>Hue Controller</title>
+<!-- TODO: add CSS (BootStrap?) -->
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+<nav>
+    <h1>Hue Controller</h1>
+</nav>
+
+<section class="content">
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+
+    {% block content %}{% endblock %}
+</section>
