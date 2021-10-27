@@ -39,7 +39,7 @@ def create_app(test_config=None):
     def index():
         return render_template('index.html')
 
-    @app.route('/on', methods=['POST'])
+    @app.route('/on')
     def on():
         r = requests.put(
             API_ENDPOINT,
@@ -48,7 +48,7 @@ def create_app(test_config=None):
         print(r.text)
         return render_template('index.html')
 
-    @app.route('/off', methods=['POST'])
+    @app.route('/off')
     def off():
         r = requests.put(
             API_ENDPOINT,
