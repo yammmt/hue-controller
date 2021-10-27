@@ -57,4 +57,31 @@ def create_app(test_config=None):
         print(r.text)
         return render_template('index.html')
 
+    @app.route('/d50')
+    def d50():
+        r = requests.put(
+            API_ENDPOINT,
+            json={"ct": 200}
+        )
+        print(r.text)
+        return render_template('index.html')
+
+    @app.route('/d65')
+    def d65():
+        r = requests.put(
+            API_ENDPOINT,
+            json={"ct": 153}
+        )
+        print(r.text)
+        return render_template('index.html')
+
+    @app.route('/lamp')
+    def lamp():
+        r = requests.put(
+            API_ENDPOINT,
+            json={"ct": 357}
+        )
+        print(r.text)
+        return render_template('index.html')
+
     return app
