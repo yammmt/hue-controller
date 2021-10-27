@@ -41,47 +41,35 @@ def create_app(test_config=None):
 
     @app.route('/on')
     def on():
-        r = requests.put(
-            API_ENDPOINT,
-            json={"on": True}
-        )
-        print(r.text)
+        send_json_to_bridge({"on": True})
         return render_template('index.html')
 
     @app.route('/off')
     def off():
-        r = requests.put(
-            API_ENDPOINT,
-            json={"on": False}
-        )
-        print(r.text)
+        send_json_to_bridge({"on": False})
         return render_template('index.html')
 
     @app.route('/d50')
     def d50():
-        r = requests.put(
-            API_ENDPOINT,
-            json={"ct": 200}
-        )
-        print(r.text)
+        send_json_to_bridge({"ct": 200})
         return render_template('index.html')
 
     @app.route('/d65')
     def d65():
-        r = requests.put(
-            API_ENDPOINT,
-            json={"ct": 153}
-        )
-        print(r.text)
+        send_json_to_bridge({"ct": 153})
         return render_template('index.html')
 
     @app.route('/lamp')
     def lamp():
+        send_json_to_bridge({"ct": 357})
+        return render_template('index.html')
+
+    # TODO: use logger instead of `print`
+    def send_json_to_bridge(json_data):
         r = requests.put(
             API_ENDPOINT,
-            json={"ct": 357}
+            json=json_data
         )
         print(r.text)
-        return render_template('index.html')
 
     return app
