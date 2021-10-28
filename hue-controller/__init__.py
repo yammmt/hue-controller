@@ -23,7 +23,7 @@ def create_app(test_config=None):
         os.getenv('USERNAME'),
         os.getenv('GROUP')
     )
-    print(API_ENDPOINT)
+    app.logger.info("endpoint: {}".format(API_ENDPOINT))
 
     # TODO: check meaning
     if test_config is None:
@@ -84,7 +84,7 @@ def create_app(test_config=None):
         return render_template('index.html')
 
     def start_gradation():
-        print("start_gradation")
+        app.logger.debug("start_gradation")
         if party_color_thread:
             return
 
@@ -93,19 +93,18 @@ def create_app(test_config=None):
         party_color_thread.append(t)
 
     def stop_gradation():
-        print("stop_gradation")
+        app.logger.debug("stop_gradation")
         if not party_color_thread:
             return
 
         party_color_thread[0].stop()
         del party_color_thread[0]
 
-    # TODO: use logger instead of `print`
     def send_json_to_bridge(json_data):
         r = requests.put(
             API_ENDPOINT,
             json=json_data
         )
-        print(r.text)
+        app.logger.info(r.text)
 
     return app
