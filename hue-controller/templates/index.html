@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<!-- on/off -->
 <section class="container">
     <button type="button" class="btn btn-info" onclick="location.href='/on'">ON</button>
     <button type="button" class="btn btn-info" onclick="location.href='/off'">OFF</button>
@@ -27,12 +28,14 @@
     </form>
 </section>
 
+<!-- standard lights -->
 <section class="container">
     <button type="button" class="btn btn-light" onclick="location.href='/d50'">D50</button>
     <button type="button" class="btn btn-light" onclick="location.href='/d65'">D65</button>
     <button type="button" class="btn btn-light" onclick="location.href='/lamp'">Lamp</button>
 </section>
 
+<!-- Party (gradation (continuous change)) -->
 <section class="container">
     <button type="button" class="btn btn-primary" onclick="location.href='/start_party'">Start Party!</button>
     <button type="button" class="btn btn-danger" onclick="location.href='/start_intense_party'">Start Intense Party!</button>
