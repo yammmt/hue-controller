@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask
 from flask import render_template
+from flask import request
 import requests
 
 from . import party_color
@@ -57,6 +58,24 @@ def create_app(test_config=None):
         send_json_to_bridge({"on": False})
         return render_template('index.html')
 
+    # TODO: add GET method
+    @app.route('/brightness', methods=["POST"])
+    def brightness():
+        send_json_to_bridge({"bri": int(request.form['brightness'])})
+        return render_template('index.html')
+
+    # TODO: add GET method
+    @app.route('/saturation', methods=["POST"])
+    def saturation():
+        send_json_to_bridge({"sat": int(request.form['saturation'])})
+        return render_template('index.html')
+
+    # TODO: add GET method
+    @app.route('/transitiontime', methods=["POST"])
+    def transitiontime():
+        send_json_to_bridge({"transitiontime": int(request.form['transition_time']) // 100})
+        return render_template('index.html')
+
     @app.route('/d50')
     def d50():
         stop_gradation()
@@ -78,16 +97,12 @@ def create_app(test_config=None):
     @app.route('/start_party')
     def start_party():
         stop_gradation()
-        # boost saturation to describe colors
-        send_json_to_bridge({"sat": 200})
         start_gradation()
         return render_template('index.html')
 
     @app.route('/start_intense_party')
     def start_party_danger():
         stop_gradation()
-        # boost saturation to describe colors
-        send_json_to_bridge({"sat": 200})
         start_gradation(
             hue_inc=7000,
             cmd_interval_sec=0.3
