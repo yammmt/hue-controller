@@ -1,6 +1,8 @@
-# [WIP] hue-controller
+# Hue Controller
 
-controls Philips Hue from your browser
+controls [Philips Hue](https://www.philips-hue.com/en-us) from your browser
+
+![index page view](./img/index.png)
 
 ## Usage
 
@@ -24,6 +26,12 @@ flask run
 ```
 
 And visit `http://localhost:5000`.
+
+Any buttons in index page SHOULD work as they are.
+Here, the word "Party" in buttons mean gradation.
+For example, "Start Party!" button works like the following:
+
+![party mode movie](./img/party.gif)
 
 ## Links
 
