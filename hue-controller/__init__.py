@@ -37,6 +37,10 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    # const values
+    DEFAULT_HUE_INC = 5000
+    DEFAULT_COLOR_CMD_INTERVAL_SEC = 3.0
+
     party_color_thread = []
 
     @app.route('/')
@@ -83,12 +87,19 @@ def create_app(test_config=None):
         stop_gradation()
         return render_template('index.html')
 
-    def start_gradation():
+    def start_gradation(
+        hue_inc=DEFAULT_HUE_INC,
+        cmd_interval_sec=DEFAULT_COLOR_CMD_INTERVAL_SEC
+    ):
         app.logger.debug("start_gradation")
         if party_color_thread:
             return
 
-        t = party_color.PartyColor(send_json_to_bridge)
+        t = party_color.PartyColor(
+            send_json_to_bridge,
+            hue_inc,
+            cmd_interval_sec
+        )
         t.start()
         party_color_thread.append(t)
 

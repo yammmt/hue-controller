@@ -7,12 +7,16 @@ import time
 # This code comes from Qiita:
 # https://qiita.com/juri-t/items/5cec3822e168215aff49
 class PartyColor(threading.Thread):
-    HUE_INC_UNIT = 5000
-    COLOR_CHANGE_INTERVAL_SEC = 3.0
-
-    def __init__(self, send_json_fn):
+    def __init__(
+        self,
+        send_json_fn,
+        hue_unit,
+        interval_s
+    ):
         super(PartyColor, self).__init__()
         self.send_json_fn = send_json_fn
+        self.hue_unit = hue_unit
+        self.interval_s = interval_s
         self.stop_event = threading.Event()
 
     def stop(self):
@@ -25,5 +29,5 @@ class PartyColor(threading.Thread):
             if self.stop_event.is_set():
                 break
 
-            self.send_json_fn({"hue_inc": self.HUE_INC_UNIT})
-            time.sleep(self.COLOR_CHANGE_INTERVAL_SEC)
+            self.send_json_fn({"hue_inc": self.hue_unit})
+            time.sleep(self.interval_s)
