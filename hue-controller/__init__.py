@@ -77,9 +77,21 @@ def create_app(test_config=None):
 
     @app.route('/start_party')
     def start_party():
+        stop_gradation()
         # boost saturation to describe colors
         send_json_to_bridge({"sat": 200})
         start_gradation()
+        return render_template('index.html')
+
+    @app.route('/start_intense_party')
+    def start_party_danger():
+        stop_gradation()
+        # boost saturation to describe colors
+        send_json_to_bridge({"sat": 200})
+        start_gradation(
+            hue_inc=7000,
+            cmd_interval_sec=0.3
+        )
         return render_template('index.html')
 
     @app.route('/stop_party')
