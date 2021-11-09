@@ -2,8 +2,10 @@ import os
 
 from dotenv import load_dotenv
 from flask import Flask
+from flask import redirect
 from flask import render_template
 from flask import request
+from flask import url_for
 import requests
 
 from . import party_color
@@ -60,54 +62,54 @@ def create_app(test_config=None):
     @app.route('/on')
     def on():
         send_json_to_bridge({"on": True})
-        return render_template('index.html')
+        return redirect(url_for('index'))
 
     @app.route('/off')
     def off():
         send_json_to_bridge({"on": False})
-        return render_template('index.html')
+        return redirect(url_for('index'))
 
     # TODO: add GET method
     @app.route('/brightness', methods=["POST"])
     def brightness():
         send_json_to_bridge({"bri": int(request.form['brightness'])})
-        return render_template('index.html')
+        return redirect(url_for('index'))
 
     # TODO: add GET method
     @app.route('/saturation', methods=["POST"])
     def saturation():
         send_json_to_bridge({"sat": int(request.form['saturation'])})
-        return render_template('index.html')
+        return redirect(url_for('index'))
 
     # TODO: add GET method
     @app.route('/transitiontime', methods=["POST"])
     def transitiontime():
         send_json_to_bridge({"transitiontime": int(request.form['transition_time']) // 100})
-        return render_template('index.html')
+        return redirect(url_for('index'))
 
     @app.route('/d50')
     def d50():
         stop_gradation()
         send_json_to_bridge({"ct": 200})
-        return render_template('index.html')
+        return redirect(url_for('index'))
 
     @app.route('/d65')
     def d65():
         stop_gradation()
         send_json_to_bridge({"ct": 153})
-        return render_template('index.html')
+        return redirect(url_for('index'))
 
     @app.route('/lamp')
     def lamp():
         stop_gradation()
         send_json_to_bridge({"ct": 357})
-        return render_template('index.html')
+        return redirect(url_for('index'))
 
     @app.route('/start_party')
     def start_party():
         stop_gradation()
         start_gradation()
-        return render_template('index.html')
+        return redirect(url_for('index'))
 
     @app.route('/start_intense_party')
     def start_party_danger():
@@ -116,12 +118,12 @@ def create_app(test_config=None):
             hue_inc=7000,
             cmd_interval_sec=0.3
         )
-        return render_template('index.html')
+        return redirect(url_for('index'))
 
     @app.route('/stop_party')
     def stop_party():
         stop_gradation()
-        return render_template('index.html')
+        return redirect(url_for('index'))
 
     def start_gradation(
         hue_inc=DEFAULT_HUE_INC,
