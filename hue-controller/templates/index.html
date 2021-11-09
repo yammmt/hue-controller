@@ -27,13 +27,19 @@
             <tr>
                 <td><label for="brightness">Brightness</label></td>
                 <td>[0, 254]</td>
-                <td><input type="number" id="brightness" name="brightness" value=254 form="f_brightness"></td>
+                {% if not bri %}
+                    {% set bri = 254 %}
+                {% endif %}
+                <td><input type="number" id="brightness" name="brightness" value={{ bri }} form="f_brightness"></td>
                 <td><button type="submit" class="btn btn-info" form="f_brightness">Set</button></td>
             </tr>
             <tr>
                 <td><label for="saturation">Saturation</label></td>
                 <td>[0, 254]</td>
-                <td><input type="number" id="saturation" name="saturation" value=254 form="f_saturation"></td>
+                {% if not sat %}
+                    {% set sat = 254 %}
+                {% endif %}
+                <td><input type="number" id="saturation" name="saturation" value={{ sat }} form="f_saturation"></td>
                 <td><button type="submit" class="btn btn-info" form="f_saturation">Set</button></td>
             </tr>
             <tr>

@@ -18,13 +18,19 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
     )
 
-    # create API endpoint URL
-    API_ENDPOINT = "http://{}/api/{}/groups/{}/action".format(
+    # create API endpoint UR
+    GET_ENDPOINT = "http://{}/api/{}/groups/{}".format(
         os.getenv('BRIDGE_IP_ADDR'),
         os.getenv('USERNAME'),
         os.getenv('GROUP')
     )
-    app.logger.info("endpoint: {}".format(API_ENDPOINT))
+    app.logger.info("endpoint (get): {}".format(GET_ENDPOINT))
+    POST_ENDPOINT = "http://{}/api/{}/groups/{}/action".format(
+        os.getenv('BRIDGE_IP_ADDR'),
+        os.getenv('USERNAME'),
+        os.getenv('GROUP')
+    )
+    app.logger.info("endpoint (post): {}".format(POST_ENDPOINT))
 
     # TODO: check meaning
     if test_config is None:
@@ -46,7 +52,10 @@ def create_app(test_config=None):
 
     @app.route('/')
     def index():
-        return render_template('index.html')
+        r = requests.get(GET_ENDPOINT)
+        bri = r.json()['action']['bri']
+        sat = r.json()['action']['sat']
+        return render_template('index.html', bri=bri, sat=sat)
 
     @app.route('/on')
     def on():
@@ -140,7 +149,7 @@ def create_app(test_config=None):
 
     def send_json_to_bridge(json_data):
         r = requests.put(
-            API_ENDPOINT,
+            POST_ENDPOINT,
             json=json_data
         )
         app.logger.info(r.text)
