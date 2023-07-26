@@ -18,7 +18,7 @@ GROUP=1
 Open your terminal and type the following commands:
 
 ```console
-pip install -r requirements.txt
+pip install -r requirements.lock
 export FLASK_APP=hue-controller
 # if needed:
 # export FLASK_ENV=development
